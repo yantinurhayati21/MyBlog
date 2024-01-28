@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Models;
 
 namespace MyBlog.Controllers
 {
+	[Authorize]
     public class PostController : Controller
     {
+
         private readonly AppDbContext _context;
 
 		public PostController(AppDbContext  c)
@@ -74,6 +77,44 @@ namespace MyBlog.Controllers
 			_context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+		public IActionResult Edit(int id)
+		{
+			var postData = _context.Posts.FirstOrDefault(x => x.Id == id);
+			return View(postData);
+		}
+
+		[HttpPost]
+
+		public IActionResult Edit([FromForm] Post data)
+		{
+			var dataFromDb = _context.Posts.FirstOrDefault(x => x.Id == data.Id);
+
+			if(dataFromDb != null)
+			{
+				dataFromDb.Title = data.Title;
+				dataFromDb.Content = data.Content;
+
+				_context.Posts.Update(dataFromDb);
+				_context.SaveChanges();
+			}
+			
+			return RedirectToAction("Index");
+
+		}
+
+		public IActionResult Delete(int id)
+		{
+			var dataFromDb = _context.Posts.FirstOrDefault(x=> x.Id == id);
+
+			if(dataFromDb != null)
+			{
+				_context.Posts.Remove(dataFromDb);
+				_context.SaveChanges();
+			}
+			return RedirectToAction("Index");
+		}
+
         private List<Post> GeneratePost()
         {
 			Random random = new Random();
