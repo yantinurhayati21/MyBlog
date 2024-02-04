@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="TopLikedPosts">Favorites</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Index">Author</a>
+                        </li>
 
                         @if(User.Claims.FirstOrDefault() !=null)
                         {
@@ -43,6 +46,10 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                         }
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
                     </ul>
                 </div>
             </div>

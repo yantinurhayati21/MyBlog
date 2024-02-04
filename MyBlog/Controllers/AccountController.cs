@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using MyBlog.Models;
 using System.Security.Claims;
+using System.Text;
 
 namespace MyBlog.Controllers
 {
@@ -29,6 +30,7 @@ namespace MyBlog.Controllers
 
 			if (userFromDb == null)
 			{
+				@ViewBag.Error = "User not found";
 				return View();
 			}
 			var claims = new List<Claim>()
@@ -50,5 +52,6 @@ namespace MyBlog.Controllers
 			await HttpContext.SignOutAsync();
 			return RedirectToAction("Login");
 		}
-	}
+
+    }
 }

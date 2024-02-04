@@ -7,7 +7,6 @@ namespace MyBlog.Controllers
 	[Authorize]
     public class PostController : Controller
     {
-
         private readonly AppDbContext _context;
 
 		public PostController(AppDbContext  c)
